@@ -16,6 +16,8 @@
 		C3FC5BCF28AD7AFD00239499 /* CityDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FC5BCE28AD7AFD00239499 /* CityDataService.swift */; };
 		C3FC5BD128AD7CB500239499 /* CityInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FC5BD028AD7CB500239499 /* CityInfoView.swift */; };
 		C3FC5BD328AD861F00239499 /* CityDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FC5BD228AD861F00239499 /* CityDetailView.swift */; };
+		C3FC5BD528AD87BE00239499 /* CitySearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FC5BD428AD87BE00239499 /* CitySearchView.swift */; };
+		C3FC5BD728AD88A800239499 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FC5BD628AD88A800239499 /* MapView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +31,8 @@
 		C3FC5BCE28AD7AFD00239499 /* CityDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityDataService.swift; sourceTree = "<group>"; };
 		C3FC5BD028AD7CB500239499 /* CityInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityInfoView.swift; sourceTree = "<group>"; };
 		C3FC5BD228AD861F00239499 /* CityDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityDetailView.swift; sourceTree = "<group>"; };
+		C3FC5BD428AD87BE00239499 /* CitySearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitySearchView.swift; sourceTree = "<group>"; };
+		C3FC5BD628AD88A800239499 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +106,8 @@
 				C3FC5BCA28AD78E700239499 /* SearchBar.swift */,
 				C3FC5BD028AD7CB500239499 /* CityInfoView.swift */,
 				C3FC5BD228AD861F00239499 /* CityDetailView.swift */,
+				C3FC5BD428AD87BE00239499 /* CitySearchView.swift */,
+				C3FC5BD628AD88A800239499 /* MapView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -177,11 +183,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				C3FC5BD328AD861F00239499 /* CityDetailView.swift in Sources */,
+				C3FC5BD528AD87BE00239499 /* CitySearchView.swift in Sources */,
 				C3FC5BBC28AD4E7A00239499 /* ContentView.swift in Sources */,
 				C3FC5BD128AD7CB500239499 /* CityInfoView.swift in Sources */,
 				C3FC5BCF28AD7AFD00239499 /* CityDataService.swift in Sources */,
 				C3FC5BBA28AD4E7A00239499 /* Amadeus_POI_iOSApp.swift in Sources */,
 				C3FC5BCD28AD79C700239499 /* City.swift in Sources */,
+				C3FC5BD728AD88A800239499 /* MapView.swift in Sources */,
 				C3FC5BCB28AD78E800239499 /* SearchBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
