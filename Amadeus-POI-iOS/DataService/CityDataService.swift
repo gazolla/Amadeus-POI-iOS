@@ -12,11 +12,11 @@ class CityDataService: ObservableObject {
     static let instance = CityDataService()
     private init() {}
     
-    @Published var currencyCity:City?
+    @Published var currentCity:City?
     
     func searchCity(text:String){
         guard !text.isEmpty else {
-            self.currencyCity = nil
+            self.currentCity = nil
             return
         }
         let geoCoder = CLGeocoder()
@@ -26,9 +26,9 @@ class CityDataService: ObservableObject {
             }
             
             if placemarks != nil {
-                self.currencyCity = City(placemark: placemarks![0])
+                self.currentCity = City(placemark: placemarks![0])
             } else {
-                self.currencyCity = nil
+                self.currentCity = nil
             }
         
         }
