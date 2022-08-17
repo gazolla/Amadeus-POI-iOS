@@ -22,6 +22,13 @@ struct City: Identifiable, Equatable{
         self.placemark = placemark
     }
     
+    init(name: String? = nil, country: String? = nil, flagIconURL: String? = nil, placemark: CLPlacemark? = nil) {
+        self.name = name
+        self.country = country
+        self.flagIconURL = flagIconURL
+        self.placemark = placemark
+    }
+    
     static func == (lhs: City, rhs: City) -> Bool {
         lhs.id == rhs.id
     }
