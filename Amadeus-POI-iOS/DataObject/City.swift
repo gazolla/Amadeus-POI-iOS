@@ -8,7 +8,6 @@
 import Foundation
 import MapKit
 
-
 struct City: Identifiable, Equatable{
     var id = UUID()
     var name:String?
