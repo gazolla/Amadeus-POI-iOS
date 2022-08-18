@@ -13,7 +13,16 @@ class CityDataService: ObservableObject {
     private init() {}
     
     @Published var currentCity:City?
-    
+    @Published var selectedCity:City?
+
+    func addCity(){
+        if let city = currentCity {
+            self.selectedCity = city
+        } else {
+            print("CityViewModel ==>> NO CITY TO ADD")
+        }
+    }
+
     func searchCity(text:String){
         guard !text.isEmpty else {
             self.currentCity = nil

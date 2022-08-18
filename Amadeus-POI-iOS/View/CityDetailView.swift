@@ -16,8 +16,8 @@ struct CityDetailView: View {
                 CityCellView(city:city)
                 Button {
                     withAnimation {
-                       // cvm.addCity(city:city)
-                    }
+                        cds.addCity()
+                     }
                     dismissAction!()
                 } label: {
                     Text("Add City")
@@ -30,7 +30,7 @@ struct CityDetailView: View {
             }
             .padding()
             .onDisappear{
-                //cvm.currentCity = nil
+                cds.currentCity = nil
             }
         }
     }

@@ -27,7 +27,7 @@ struct CityInfoView: View {
 }
 
 struct CityInfoWrapper:View{
-    let city = City(name:"Brasilia", country:"Brasil", flagIconURL: "BR")
+    let city = City(name:"Brasilia", country:"Brasil", flagIconURL: "BR", placemark: nil)
     var body: some View {
         CityInfoView(city: city)
     }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import MapKit
 
 struct CitySearchView: View {
     @Environment(\.dismiss) var dismiss
@@ -28,11 +29,22 @@ struct CitySearchView: View {
             .navigationTitle("Search City")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(trailing: Button(action: {
-                dismiss()
+                dismissSheet()
             }, label: {
                 Image(systemName: "xmark.circle.fill")
                     .foregroundColor(.gray)
             }))
+        }
+        .onSubmit {
+            withAnimation {
+                cds.searchCity(text: searchText)
+            }
+                
+        }
+        .onChange(of: searchText) { newValue in
+           if newValue.isEmpty {
+               cds.searchCity(text: newValue)
+           }
         }
     }
     

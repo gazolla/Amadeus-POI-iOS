@@ -8,13 +8,35 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var showSearchCity: Bool = false
+    @StateObject private var cds = CityDataService.instance
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        NavigationView{
+            if cds.selectedCity == nil {
+                CityEmptyView()
+                    .modifier(CityListModifier(showSearchCity: showSearchCity, cds: cds))
+            } else {
+                /*CityListView(cvm: cvm)
+                    .modifier(CityListModifier(showSearchCity: showSearchCity, cvm: cvm))*/
+                    
+            }
         }
+    }
+}
+
+struct CityListModifier: ViewModifier {
+    @State var showSearchCity: Bool
+    @ObservedObject var cds:CityDataService
+    func body(content: Content) -> some View {
+        content
+            .navigationTitle("City")
+            .navigationBarItems(trailing:
+                    Button("search City") {
+                        showSearchCity.toggle()
+                    }
+                    .sheet(isPresented: $showSearchCity) {
+                        CitySearchView(cds:cds)
+                    })
     }
 }
 
