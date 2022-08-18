@@ -16,8 +16,13 @@ struct ContentView: View {
                 CityEmptyView()
                     .modifier(CityListModifier(showSearchCity: showSearchCity, cds: cds))
             } else {
-                /*CityListView(cvm: cvm)
-                    .modifier(CityListModifier(showSearchCity: showSearchCity, cvm: cvm))*/
+                CityInfoView(city: cds.selectedCity!)
+                    .modifier(CityListModifier(showSearchCity: showSearchCity, cds: cds))
+                    .navigationBarItems(leading:
+                        Button("clear City") {
+                            cds.selectedCity = nil
+                        }
+                    )
                     
             }
         }
@@ -34,6 +39,7 @@ struct CityListModifier: ViewModifier {
                     Button("search City") {
                         showSearchCity.toggle()
                     }
+                    .disabled(cds.selectedCity != nil)
                     .sheet(isPresented: $showSearchCity) {
                         CitySearchView(cds:cds)
                     })

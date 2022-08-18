@@ -17,7 +17,7 @@ struct CityEmptyView: View {
                 Text ("There is no City!")
                     .font(.title)
                     .fontWeight(.semibold)
-                Text("You should click the add button and add one!")
+                Text("You should click the search button and add one!")
                     .multilineTextAlignment(.center)
                     .padding(40)
             }
