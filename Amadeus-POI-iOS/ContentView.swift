@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @State private var showSearchCity: Bool = false
     @StateObject private var cds = CityDataService.instance
+    @StateObject private var pds = POIDataService.instance
     var body: some View {
         NavigationView{
             if cds.selectedCity == nil {
@@ -20,7 +21,8 @@ struct ContentView: View {
                     .modifier(CityListModifier(showSearchCity: showSearchCity, cds: cds))
                     .navigationBarItems(leading:
                         Button("clear City") {
-                            cds.selectedCity = nil
+                            cds.clearResults()
+                            pds.clearResults()
                         }
                     )
                     

@@ -19,6 +19,11 @@
 		C3FC5BD528AD87BE00239499 /* CitySearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FC5BD428AD87BE00239499 /* CitySearchView.swift */; };
 		C3FC5BD728AD88A800239499 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FC5BD628AD88A800239499 /* MapView.swift */; };
 		C3FC5BD928AD8C4A00239499 /* CityEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FC5BD828AD8C4A00239499 /* CityEmptyView.swift */; };
+		C3FC5BDB28AE879A00239499 /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FC5BDA28AE879A00239499 /* Auth.swift */; };
+		C3FC5BDD28AE87C000239499 /* ErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FC5BDC28AE87C000239499 /* ErrorModel.swift */; };
+		C3FC5BDF28AE87E000239499 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FC5BDE28AE87E000239499 /* DataModel.swift */; };
+		C3FC5BE128AE882A00239499 /* POIDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FC5BE028AE882A00239499 /* POIDataService.swift */; };
+		C3FC5BE328AE928E00239499 /* AmadeusPOIiOS.gif in Resources */ = {isa = PBXBuildFile; fileRef = C3FC5BE228AE928E00239499 /* AmadeusPOIiOS.gif */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +40,12 @@
 		C3FC5BD428AD87BE00239499 /* CitySearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitySearchView.swift; sourceTree = "<group>"; };
 		C3FC5BD628AD88A800239499 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		C3FC5BD828AD8C4A00239499 /* CityEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityEmptyView.swift; sourceTree = "<group>"; };
+		C3FC5BDA28AE879A00239499 /* Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth.swift; sourceTree = "<group>"; };
+		C3FC5BDC28AE87C000239499 /* ErrorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorModel.swift; sourceTree = "<group>"; };
+		C3FC5BDE28AE87E000239499 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
+		C3FC5BE028AE882A00239499 /* POIDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POIDataService.swift; sourceTree = "<group>"; };
+		C3FC5BE228AE928E00239499 /* AmadeusPOIiOS.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = AmadeusPOIiOS.gif; sourceTree = "<group>"; };
+		C3FC5BE428AE932200239499 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +62,8 @@
 		C3FC5BAD28AD4E7A00239499 = {
 			isa = PBXGroup;
 			children = (
+				C3FC5BE428AE932200239499 /* README.md */,
+				C3FC5BE228AE928E00239499 /* AmadeusPOIiOS.gif */,
 				C3FC5BB828AD4E7A00239499 /* Amadeus-POI-iOS */,
 				C3FC5BB728AD4E7A00239499 /* Products */,
 			);
@@ -90,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				C3FC5BCE28AD7AFD00239499 /* CityDataService.swift */,
+				C3FC5BE028AE882A00239499 /* POIDataService.swift */,
 			);
 			path = DataService;
 			sourceTree = "<group>";
@@ -98,6 +112,9 @@
 			isa = PBXGroup;
 			children = (
 				C3FC5BCC28AD79C700239499 /* City.swift */,
+				C3FC5BDA28AE879A00239499 /* Auth.swift */,
+				C3FC5BDC28AE87C000239499 /* ErrorModel.swift */,
+				C3FC5BDE28AE87E000239499 /* DataModel.swift */,
 			);
 			path = DataObject;
 			sourceTree = "<group>";
@@ -174,6 +191,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C3FC5BC128AD4E7F00239499 /* Preview Assets.xcassets in Resources */,
+				C3FC5BE328AE928E00239499 /* AmadeusPOIiOS.gif in Resources */,
 				C3FC5BBE28AD4E7F00239499 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -191,7 +209,11 @@
 				C3FC5BD128AD7CB500239499 /* CityInfoView.swift in Sources */,
 				C3FC5BCF28AD7AFD00239499 /* CityDataService.swift in Sources */,
 				C3FC5BBA28AD4E7A00239499 /* Amadeus_POI_iOSApp.swift in Sources */,
+				C3FC5BDF28AE87E000239499 /* DataModel.swift in Sources */,
+				C3FC5BDD28AE87C000239499 /* ErrorModel.swift in Sources */,
+				C3FC5BDB28AE879A00239499 /* Auth.swift in Sources */,
 				C3FC5BCD28AD79C700239499 /* City.swift in Sources */,
+				C3FC5BE128AE882A00239499 /* POIDataService.swift in Sources */,
 				C3FC5BD928AD8C4A00239499 /* CityEmptyView.swift in Sources */,
 				C3FC5BD728AD88A800239499 /* MapView.swift in Sources */,
 				C3FC5BCB28AD78E800239499 /* SearchBar.swift in Sources */,

@@ -14,6 +14,11 @@ class CityDataService: ObservableObject {
     
     @Published var currentCity:City?
     @Published var selectedCity:City?
+    
+    func clearResults(){
+        currentCity = nil
+        selectedCity = nil
+    }
 
     func addCity(){
         if let city = currentCity {
