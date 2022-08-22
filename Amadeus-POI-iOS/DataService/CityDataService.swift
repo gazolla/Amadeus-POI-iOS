@@ -8,21 +8,49 @@
 import Foundation
 import MapKit
 
-class CityDataService: ObservableObject {
+class CityDataService: NSObject, ObservableObject {
     static let instance = CityDataService()
-    private init() {}
+    private override init(){
+        super.init()
+        self.locationManager.delegate = self
+        self.locationManager.requestWhenInUseAuthorization()
+        self.locationManager.startUpdatingLocation()
+    }
     
+    enum span {
+        static let city = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+        static let location = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+    }
+    
+    static let startingLocation = CLLocationCoordinate2D(latitude: 37.331516, longitude: -121.891054)
     @Published var currentCity:City?
     @Published var selectedCity:City?
+    let locationManager:CLLocationManager = CLLocationManager()
+    @Published var region =  MKCoordinateRegion(center: startingLocation, span: span.city)
+    
     
     func clearResults(){
         currentCity = nil
         selectedCity = nil
+        locationManager.startUpdatingLocation()
+    }
+    
+    func setLocationRegion(geoCode:GeoCode){
+        if let lat = geoCode.latitude, let lng = geoCode.longitude {
+            let coord = CLLocationCoordinate2D(latitude: lat, longitude: lng)
+            region = MKCoordinateRegion( center: coord, span:span.location)
+        } else {
+            print("Can't set location Region....")
+        }
     }
 
     func addCity(){
         if let city = currentCity {
+            locationManager.stopUpdatingLocation()
             self.selectedCity = city
+            if let coord = city.placemark?.location?.coordinate {
+                region = MKCoordinateRegion( center: coord, span:span.city)
+            }
         } else {
             print("CityViewModel ==>> NO CITY TO ADD")
         }
@@ -46,5 +74,33 @@ class CityDataService: ObservableObject {
             }
         
         }
+    }
+}
+
+extension CityDataService: CLLocationManagerDelegate{
+
+    private func checkLocationAuthorization(){
+        switch locationManager.authorizationStatus {
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+        case .restricted:
+            print("Your location is restricted")
+        case .denied:
+            print("Your have denied this app location permition.")
+        case .authorizedAlways, .authorizedWhenInUse:
+            break
+        @unknown default:
+            break
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last{
+            region = MKCoordinateRegion(center: location.coordinate, span: span.location)
+        }
+    }
+    
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        checkLocationAuthorization()
     }
 }

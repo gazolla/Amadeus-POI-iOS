@@ -20,7 +20,7 @@ struct CityDetailView: View {
                      }
                     dismissAction!()
                 } label: {
-                    Text("Add City")
+                    Text("Select City")
                         .frame(maxWidth: .infinity, maxHeight: 35)
                         .fontWeight(.medium)
                         .background(Color.blue)

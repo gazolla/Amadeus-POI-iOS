@@ -15,6 +15,7 @@ struct SearchBar: View {
     @Binding var text: String
     @FocusState private var focusedField: FocusField?
     @State private var isEditing = false
+    var dismiss:(()->())?
     
     var body: some View {
         HStack {
@@ -57,7 +58,7 @@ struct SearchBar: View {
                         Button(action: {
                             self.isEditing = false
                             self.text = ""
-                            
+                            self.dismiss?()
                             // Dismiss the keyboard
                             UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                         }) {

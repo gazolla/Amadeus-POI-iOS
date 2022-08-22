@@ -27,3 +27,16 @@ struct AmadeusError: Codable, Identifiable {
 struct Source:Codable{
     var parameters:[String]?
 }
+
+
+struct AmadeusTokenError: Codable, Identifiable {
+    var id = UUID()
+    var error:String?
+    var error_description:String?
+    var code:Int?
+    var title:String?
+    
+    enum CodingKeys: String, CodingKey {
+        case error, error_description, code, title
+    }
+}

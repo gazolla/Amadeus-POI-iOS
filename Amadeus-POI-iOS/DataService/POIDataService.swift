@@ -9,19 +9,21 @@ import Foundation
 
 class POIDataService: ObservableObject{
     
-    let key = "" // <--- TYPE YOUR KEY HERE
-    let secret =  "" // <-- TYPE YOUR SECRET HERE
+    let key = "JdTQmD6Vo99ZMfLPPMBsbtxU91gmZNtq" // <--- TYPE YOUR KEY HERE
+    let secret =  "kpZRN5besFxi0VnA" // <-- TYPE YOUR SECRET HERE
     var accessToken:String?
     static let instance = POIDataService()
     
     @Published var pois:DataModel?
     @Published var amadeusError:ErrorModel?
-    
+    @Published var amadeusTokenError:AmadeusTokenError?
+
     private init() {}
     
     func clearResults(){
         pois = nil
         amadeusError = nil
+        amadeusTokenError = nil
     }
     
     func buildTokenRequest()->URLRequest?{
@@ -40,10 +42,20 @@ class POIDataService: ObservableObject{
         guard let request = request else { return nil }
         do{
             let (resultData, _) = try await URLSession.shared.data(for: request)
+            let str = String(decoding: resultData, as: UTF8.self)
+            print("\(str)")
             let decoder = JSONDecoder()
+            let result:Decodable
             decoder.dateDecodingStrategy = .iso8601
-            let auth = try decoder.decode(Auth.self, from: resultData)
-            return auth.access_token
+            if str.contains("error"){
+                result = try decoder.decode(AmadeusTokenError.self, from: resultData)
+                DispatchQueue.main.async {
+                    self.amadeusTokenError = result as? AmadeusTokenError
+                }
+            } else {
+                let auth = try decoder.decode(Auth.self, from: resultData)
+                return auth.access_token
+            }
         } catch {
             print("\(request)")
             print("\(error).")
@@ -68,12 +80,14 @@ class POIDataService: ObservableObject{
     func buildRequest(latitude:Double, longitude:Double) async -> URLRequest?{
         guard let url = buildURL(latitude:latitude, longitude:longitude) else { return nil  }
         if  accessToken == nil {
-            accessToken = await getAccessToken(request: buildTokenRequest())
+            if let accessToken = await getAccessToken(request: buildTokenRequest()) {
+                var request = URLRequest(url:url)
+                request.setValue("application/vnd.amadeus+json", forHTTPHeaderField: "accept")
+                request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization" )
+                return request
+            }
         }
-        var request = URLRequest(url:url)
-        request.setValue("application/vnd.amadeus+json", forHTTPHeaderField: "accept")
-        request.setValue("Bearer \(accessToken!)", forHTTPHeaderField: "Authorization" )
-        return request
+        return nil
     }
     
     func loadPointsOfInterest(latitude:Double, longitude:Double) async {
