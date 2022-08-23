@@ -13,7 +13,7 @@ struct ContentView:View{
     @StateObject private var cds = CityDataService.instance
     @State private var searchText = ""
     @State private var viewState:ViewStates = .initial
-    @State private var isShowingPOIList = true
+    @State private var isShowingPOIList = false
 
     var body: some View{
         ZStack{
@@ -59,15 +59,72 @@ extension ContentView {
         }
     }
     
+    var showSearchButton: some View{
+        VStack{
+            Button {
+                changeStateToSearching()
+            } label: {
+                Image(systemName: "magnifyingglass.circle.fill")
+                    .font(.largeTitle)
+                    .foregroundColor(.gray)
+            }
+            .frame(maxWidth: .infinity, alignment: .topTrailing)
+            .padding()
+            Spacer()
+        }
+        .onAppear(perform: cds.clearResults)
+    }
+
+    var showSearchView: some View{
+        showBasicTopView {
+            VStack{
+                SearchBar(text: $searchText, dismiss: changeStateToInitial)
+                    .frame(height:60)
+                if let _ = cds.currentCity {
+                    VStack{
+                        Divider()
+                            .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
+                         CityDetailView(dismissAction: changeStateToSelected, cds: cds)
+                    }
+                 }
+            }
+            .onSubmit {
+                withAnimation {
+                    cds.searchCity(text: searchText)
+                }
+            }
+            .onChange(of: searchText) { newValue in
+                if newValue.isEmpty {
+                    cds.searchCity(text: newValue)
+                }
+            }
+
+        }
+    }
+
+    var showSelectedCityView: some View{
+        showBasicTopView {
+            VStack{
+                if let city = cds.selectedCity {
+                    CityCellView(city: city)
+                        .padding()
+                }
+            }
+            .onAppear{
+                changeStateToListing()
+            }
+        }
+    }
+
     var showListPOIView: some View{
         showBasicTopView {
             VStack{
                 if let city = cds.selectedCity {
                     HStack{
                         Button {
+                            ToggleStateView()
                             withAnimation(.easeInOut) {
                                 isShowingPOIList.toggle()
-                                viewState = (viewState == .showPOI) ? .listed : .showPOI
                             }
                          } label: {
                             CityCellView(city: city)
@@ -75,8 +132,7 @@ extension ContentView {
                         }
                         Button{
                             changeStateToInitial()
-                            pds.clearResults()
-                        } label: {
+                         } label: {
                             Image(systemName: "xmark.circle.fill")
                                 .foregroundColor(.gray)
                                 .font(.title2)
@@ -92,7 +148,7 @@ extension ContentView {
                             .rotationEffect(Angle(degrees: isShowingPOIList ? 180 : 0))
                     }
                     if isShowingPOIList {
-                        POIListView(StateViewShowPOI: changeStateToShowPOI)
+                        POIListView(changeStateToShowPOI: changeStateToShowPOI)
                     }
                 }
             }
@@ -113,53 +169,8 @@ extension ContentView {
         }
     }
     
-    var showSelectedCityView: some View{
-        showBasicTopView {
-            VStack{
-                if let city = cds.selectedCity {
-                    CityCellView(city: city)
-                        .padding()
-                }
-            }
-            .onAppear{
-                changeStateToListing()
-            }
-        }
-    }
-    
-    var showSearchView: some View{
-        showBasicTopView {
-            VStack{
-                SearchBar(text: $searchText, dismiss: changeStateToInitial)
-                    .frame(height:60)
-                if let _ = cds.currentCity {
-                    Divider()
-                        .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
-                    CityDetailView(dismissAction: changeStateToSelected, cds: cds)
-                        .transition(.opacity)
-                }
-            }
-        }
-    }
-
-    var showSearchButton: some View{
-        VStack{
-            Button {
-                changeStateToSearching()
-            } label: {
-                Image(systemName: "magnifyingglass.circle.fill")
-                    .font(.largeTitle)
-                    .foregroundColor(.gray)
-            }
-            .frame(maxWidth: .infinity, alignment: .topTrailing)
-            .padding()
-            Spacer()
-        }
-        .transition(.opacity)
-    }
-    
-    @ViewBuilder func showBasicTopView(subViews:(()->some View))-> some View{
-        VStack(spacing: 0) {
+     @ViewBuilder func showBasicTopView(subViews:(()->some View))-> some View{
+         VStack(spacing: 0) {
             VStack{
                 subViews()
             }
@@ -169,17 +180,8 @@ extension ContentView {
             Spacer()
         }
         .padding()
-        .onSubmit {
-            withAnimation {
-                cds.searchCity(text: searchText)
-            }
-        }
-        .onChange(of: searchText) { newValue in
-            if newValue.isEmpty {
-                cds.searchCity(text: newValue)
-            }
-        }
-    }
+        .animation(.easeInOut, value: viewState)
+     }
     
     func searchCityPOI(){
         Task{
@@ -187,44 +189,50 @@ extension ContentView {
                 let latitude:Double = city.placemark?.location?.coordinate.latitude,
                     let longitude:Double = city.placemark?.location?.coordinate.longitude {
                         await pds.loadPointsOfInterest(latitude:latitude, longitude:longitude)
-                changeStateToListed()
-            }
+             }
         }
+        changeStateToListed()
     }
 
+    func ToggleStateView(){
+        withAnimation {
+            viewState = (viewState == .showPOI) ? .listed : .showPOI
+        }
+    }
+    
     func changeStateToListing(){
-        withAnimation(.easeInOut) {
+        withAnimation {
             viewState = .listing
         }
     }
 
     func changeStateToSearching(){
-        withAnimation(.easeInOut) {
+        withAnimation {
             viewState = .searching
         }
     }
 
     func changeStateToListed(){
-        withAnimation(.easeInOut) {
+        withAnimation {
             viewState = .listed
         }
     }
 
     func changeStateToShowPOI(){
-        withAnimation(.easeInOut) {
+        withAnimation {
             viewState = .showPOI
             isShowingPOIList = false
         }
     }
 
     func changeStateToInitial(){
-        withAnimation(.easeInOut) {
+        withAnimation {
             viewState = .initial
         }
     }
 
     func changeStateToSelected(){
-        withAnimation(.easeInOut) {
+        withAnimation {
             viewState = .selected
         }
     }

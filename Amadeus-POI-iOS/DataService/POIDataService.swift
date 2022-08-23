@@ -43,8 +43,7 @@ class POIDataService: ObservableObject{
         do{
             let (resultData, _) = try await URLSession.shared.data(for: request)
             let str = String(decoding: resultData, as: UTF8.self)
-            print("\(str)")
-            let decoder = JSONDecoder()
+             let decoder = JSONDecoder()
             let result:Decodable
             decoder.dateDecodingStrategy = .iso8601
             if str.contains("error"){
@@ -95,8 +94,7 @@ class POIDataService: ObservableObject{
         do {
             let (POIData, _) = try await URLSession.shared.data(for: request)
             let str = String(decoding: POIData, as: UTF8.self)
-            print("\(str)")
-            let decoder = JSONDecoder()
+             let decoder = JSONDecoder()
             let result:Decodable
             if str.contains("errors"){
                 result = try decoder.decode(ErrorModel.self, from: POIData)

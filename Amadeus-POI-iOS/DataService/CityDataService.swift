@@ -24,7 +24,18 @@ class CityDataService: NSObject, ObservableObject {
     
     static let startingLocation = CLLocationCoordinate2D(latitude: 37.331516, longitude: -121.891054)
     @Published var currentCity:City?
-    @Published var selectedCity:City?
+    @Published var selectedCity:City? {
+        didSet{
+            if let coord = selectedCity?.placemark?.location?.coordinate {
+                region = MKCoordinateRegion( center: coord, span:span.city)
+            }
+        }
+    }
+    @Published var selectedPOI:PointOfInterest?{
+        didSet{
+            
+        }
+    }
     let locationManager:CLLocationManager = CLLocationManager()
     @Published var region =  MKCoordinateRegion(center: startingLocation, span: span.city)
     
@@ -35,12 +46,9 @@ class CityDataService: NSObject, ObservableObject {
         locationManager.startUpdatingLocation()
     }
     
-    func setLocationRegion(geoCode:GeoCode){
-        if let lat = geoCode.latitude, let lng = geoCode.longitude {
-            let coord = CLLocationCoordinate2D(latitude: lat, longitude: lng)
-            region = MKCoordinateRegion( center: coord, span:span.location)
-        } else {
-            print("Can't set location Region....")
+    func setLocationRegion(index:Int){
+        if let poi = POIDataService.instance.pois?.data?[index]{
+            region = MKCoordinateRegion(center: poi.coordinate, span:span.location)
         }
     }
 
@@ -48,9 +56,6 @@ class CityDataService: NSObject, ObservableObject {
         if let city = currentCity {
             locationManager.stopUpdatingLocation()
             self.selectedCity = city
-            if let coord = city.placemark?.location?.coordinate {
-                region = MKCoordinateRegion( center: coord, span:span.city)
-            }
         } else {
             print("CityViewModel ==>> NO CITY TO ADD")
         }

@@ -13,7 +13,7 @@ struct DataModel: Codable {
     let data: [PointOfInterest]?
 }
 
-class PointOfInterest: Codable, Identifiable, Equatable {
+class PointOfInterest: Codable, Identifiable, Equatable, Hashable {
     var type, subType, id:String?
     let datumSelf: SelfClass?
     var geoCode: GeoCode?
@@ -24,6 +24,11 @@ class PointOfInterest: Codable, Identifiable, Equatable {
     
     static func == (lhs: PointOfInterest, rhs: PointOfInterest) -> Bool {
         lhs.id == rhs.id
+    }
+    
+   public func hash(into hasher: inout Hasher) {
+       hasher.combine(self.geoCode?.latitude)
+       hasher.combine(self.geoCode?.longitude)
     }
 }
 

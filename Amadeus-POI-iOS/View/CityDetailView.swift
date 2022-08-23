@@ -10,13 +10,14 @@ import SwiftUI
 struct CityDetailView: View {
     var dismissAction: (()->())?
     @ObservedObject var cds: CityDataService
+    @State private var isCitySelected = false
     var body: some View {
         if let city = cds.currentCity {
             VStack(){
                 CityCellView(city:city)
                 Button {
                     withAnimation {
-                        cds.addCity()
+                        isCitySelected = true
                      }
                     dismissAction!()
                 } label: {
@@ -29,8 +30,12 @@ struct CityDetailView: View {
                 }
             }
             .padding()
+            .onChange(of: isCitySelected, perform: { newValue in
+                cds.addCity()
+            })
             .onDisappear{
                 cds.currentCity = nil
+                isCitySelected = false
             }
         }
     }

@@ -9,10 +9,11 @@ import SwiftUI
 import MapKit
 
 struct POIListView: View {
-    @StateObject private var pds = POIDataService.instance
-    @StateObject private var cds = CityDataService.instance
-    @State var StateViewShowPOI:(()->())?
-    @State var region:MKCoordinateRegion =  MKCoordinateRegion(center: CityDataService.startingLocation, span: CityDataService.span.city)
+    @ObservedObject private var pds = POIDataService.instance
+    @ObservedObject private var cds = CityDataService.instance
+    @State var changeStateToShowPOI:(()->())?
+    @State private var selectedPOI = -1
+
     var body: some View {
         List{
             if let tokenError = pds.amadeusTokenError { showTokenErrors(tokenError: tokenError) }
@@ -47,42 +48,36 @@ struct POIListView: View {
                             .font(.subheadline.weight(.semibold))
                     }
             }
+            .transition(.slide)
         }
     }
     
     @ViewBuilder func showresults(dataModel:DataModel) -> some View{
         Section(header: Text("Points of Interest")) {
-            ForEach(dataModel.data!){ poi in
+            ForEach(0..<dataModel.data!.count, id:\.self){ index in
                 Button {
-                    if let geoCode = poi.geoCode{
-                            setLocationRegion(geoCode:geoCode)
-                    }
+                    selectedPOI = index
+                    changeStateToShowPOI?()
                 } label: {
                     VStack(alignment: .leading){
-                        Text(poi.name!)
+                        Text(dataModel.data![index].name!)
                             .font(.headline.weight(.bold))
-                        Text(poi.category!)
+                        Text(dataModel.data![index].category!)
                             .font(.subheadline.weight(.light))
                     }
                 }
+                
             }
-        }
-        .onChange(of: region) { region in
-            cds.region = region
-        }
-    }
-    
-    func setLocationRegion(geoCode:GeoCode){
-        if let lat = geoCode.latitude, let lng = geoCode.longitude {
-            let coord = CLLocationCoordinate2D(latitude: lat, longitude: lng)
-            region = MKCoordinateRegion( center: coord, span:CityDataService.span.location)
-        } else {
-            print("Can't set location Region....")
+            .transition(.slide)
+            .onChange(of: selectedPOI) { newValue in
+                cds.setLocationRegion(index:newValue)
+            }
         }
     }
 }
 
 struct CityInfoView_Previews: PreviewProvider {
+    
     static var previews: some View {
         POIListView()
     }
