@@ -50,7 +50,7 @@ extension ContentView {
     var showMap: some View{
         VStack{
             if viewState == .listed || viewState == .showPOI, let pois = pds.pois?.data {
-                Map(coordinateRegion: $cds.region, annotationItems: pois.filter { $0.isValid}) { poi in
+                Map(coordinateRegion: $cds.region, annotationItems: pois) { poi in
                     MapMarker(coordinate: poi.coordinate)
                 }
             } else {
@@ -72,7 +72,11 @@ extension ContentView {
             .padding()
             Spacer()
         }
-        .onAppear(perform: cds.clearResults)
+        .onAppear{
+            searchText = ""
+            cds.clearResults()
+            pds.clearResults()
+        }
     }
 
     var showSearchView: some View{
@@ -117,40 +121,57 @@ extension ContentView {
     }
 
     var showListPOIView: some View{
-        showBasicTopView {
-            VStack{
-                if let city = cds.selectedCity {
-                    HStack{
-                        Button {
-                            ToggleStateView()
-                            withAnimation(.easeInOut) {
-                                isShowingPOIList.toggle()
+        VStack{
+            showBasicTopView {
+                VStack{
+                    if let city = cds.selectedCity {
+                        HStack{
+                            Button {
+                                toggleStateView()
+                                toggleListPOI()
+                            } label: {
+                                CityCellView(city: city)
+                                    .padding(EdgeInsets(top: 0, leading: 40, bottom: 0, trailing: 0))
                             }
-                         } label: {
-                            CityCellView(city: city)
-                                .padding(EdgeInsets(top: 0, leading: 40, bottom: 0, trailing: 0))
+                            Button{
+                                changeStateToInitial()
+                            } label: {
+                                Image(systemName: "xmark.circle.fill")
+                                    .foregroundColor(.gray)
+                                    .font(.title2)
+                            }
+                            .frame(alignment: .topTrailing)
+                            .padding(20)
                         }
-                        Button{
-                            changeStateToInitial()
-                         } label: {
-                            Image(systemName: "xmark.circle.fill")
-                                .foregroundColor(.gray)
-                                .font(.title2)
+                        .overlay(alignment:.leading){
+                            Image(systemName: "arrow.down")
+                                .font(.headline)
+                                .foregroundColor(.primary)
+                                .padding()
+                                .rotationEffect(Angle(degrees: isShowingPOIList ? 180 : 0))
                         }
-                        .frame(alignment: .topTrailing)
-                        .padding(20)
-                    }
-                    .overlay(alignment:.leading){
-                        Image(systemName: "arrow.down")
-                            .font(.headline)
-                            .foregroundColor(.primary)
-                            .padding()
-                            .rotationEffect(Angle(degrees: isShowingPOIList ? 180 : 0))
-                    }
-                    if isShowingPOIList {
-                        POIListView(changeStateToShowPOI: changeStateToShowPOI)
+                        if isShowingPOIList {
+                            POIListView(changeStateToShowPOI: changeStateToShowPOI)
+                        }
                     }
                 }
+            }
+            if viewState == .showPOI, let poi = pds.selectedPOI {
+                Spacer()
+                VStack{
+                    VStack(alignment: .leading){
+                        Text(poi.name!)
+                            .font(.headline.weight(.bold))
+                        Text(poi.category!)
+                            .font(.subheadline.weight(.light))
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(20)
+                }
+                .background(.thickMaterial)
+                .cornerRadius(10)
+                .shadow(color: Color.black.opacity(0.3), radius: 20, x:0, y:15)
+                .padding()
             }
         }
     }
@@ -180,7 +201,6 @@ extension ContentView {
             Spacer()
         }
         .padding()
-        .animation(.easeInOut, value: viewState)
      }
     
     func searchCityPOI(){
@@ -193,12 +213,16 @@ extension ContentView {
         }
         changeStateToListed()
     }
-
-    func ToggleStateView(){
-        withAnimation {
-            viewState = (viewState == .showPOI) ? .listed : .showPOI
+    
+    func toggleListPOI(){
+        withAnimation(.easeInOut) {
+            isShowingPOIList.toggle()
         }
     }
+
+    func toggleStateView(){
+            viewState = (viewState == .showPOI) ? .listed : .showPOI
+     }
     
     func changeStateToListing(){
         withAnimation {

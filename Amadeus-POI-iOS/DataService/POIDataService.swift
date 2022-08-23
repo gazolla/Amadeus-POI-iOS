@@ -17,13 +17,15 @@ class POIDataService: ObservableObject{
     @Published var pois:DataModel?
     @Published var amadeusError:ErrorModel?
     @Published var amadeusTokenError:AmadeusTokenError?
-
+    @Published var selectedPOI:PointOfInterest?
+    
     private init() {}
     
     func clearResults(){
         pois = nil
         amadeusError = nil
         amadeusTokenError = nil
+        selectedPOI = nil
     }
     
     func buildTokenRequest()->URLRequest?{

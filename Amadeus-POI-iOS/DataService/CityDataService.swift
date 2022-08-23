@@ -31,11 +31,7 @@ class CityDataService: NSObject, ObservableObject {
             }
         }
     }
-    @Published var selectedPOI:PointOfInterest?{
-        didSet{
-            
-        }
-    }
+
     let locationManager:CLLocationManager = CLLocationManager()
     @Published var region =  MKCoordinateRegion(center: startingLocation, span: span.city)
     
@@ -47,8 +43,10 @@ class CityDataService: NSObject, ObservableObject {
     }
     
     func setLocationRegion(index:Int){
-        if let poi = POIDataService.instance.pois?.data?[index]{
+        let pds = POIDataService.instance
+        if let poi = pds.pois?.data?[index]{
             region = MKCoordinateRegion(center: poi.coordinate, span:span.location)
+            pds.selectedPOI = poi
         }
     }
 
