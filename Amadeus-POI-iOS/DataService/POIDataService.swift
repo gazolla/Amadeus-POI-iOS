@@ -9,8 +9,8 @@ import Foundation
 
 class POIDataService: ObservableObject{
     
-    let key = "JdTQmD6Vo99ZMfLPPMBsbtxU91gmZNtq" // <--- TYPE YOUR KEY HERE
-    let secret =  "kpZRN5besFxi0VnA" // <-- TYPE YOUR SECRET HERE
+    let key = "" // <--- TYPE YOUR KEY HERE
+    let secret =  "" // <-- TYPE YOUR SECRET HERE
     var accessToken:String?
     static let instance = POIDataService()
     
