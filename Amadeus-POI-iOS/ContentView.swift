@@ -14,6 +14,7 @@ struct ContentView:View{
     @State private var searchText = ""
     @State private var viewState:ViewStates = .initial
     @State private var isShowingPOIList = false
+    @State private var isShowingCurrentCity = false
 
     var body: some View{
         ZStack{
@@ -49,7 +50,7 @@ extension ContentView {
     
     var showMap: some View{
         VStack{
-            if viewState == .listed || viewState == .showPOI, let pois = pds.pois?.data {
+            if viewState == .listing || viewState == .listed || viewState == .showPOI, let pois = pds.pois?.data {
                 Map(coordinateRegion: $cds.region, annotationItems: pois) { poi in
                     MapMarker(coordinate: poi.coordinate)
                 }
@@ -84,7 +85,7 @@ extension ContentView {
             VStack{
                 SearchBar(text: $searchText, dismiss: changeStateToInitial)
                     .frame(height:60)
-                if let _ = cds.currentCity {
+                if isShowingCurrentCity {
                     VStack{
                         Divider()
                             .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
@@ -93,13 +94,15 @@ extension ContentView {
                  }
             }
             .onSubmit {
-                withAnimation {
-                    cds.searchCity(text: searchText)
+                cds.searchCity(text: searchText)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                     checkShowingCurrentCity()
                 }
             }
             .onChange(of: searchText) { newValue in
                 if newValue.isEmpty {
                     cds.searchCity(text: newValue)
+                    checkShowingCurrentCity()
                 }
             }
 
@@ -127,8 +130,7 @@ extension ContentView {
                     if let city = cds.selectedCity {
                         HStack{
                             Button {
-                                toggleStateView()
-                                toggleListPOI()
+                                 toggleListPOI()
                             } label: {
                                 CityCellView(city: city)
                                     .padding(EdgeInsets(top: 0, leading: 40, bottom: 0, trailing: 0))
@@ -156,22 +158,26 @@ extension ContentView {
                     }
                 }
             }
-            if viewState == .showPOI, let poi = pds.selectedPOI {
+            if viewState == .showPOI {
                 Spacer()
                 VStack{
                     VStack(alignment: .leading){
-                        Text(poi.name!)
+                        Text(pds.selectedPOI?.name! ?? "")
                             .font(.headline.weight(.bold))
-                        Text(poi.category!)
+                        Text(pds.selectedPOI?.category! ?? "")
                             .font(.subheadline.weight(.light))
                     }
+                    
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(20)
                 }
-                .background(.thickMaterial)
+                .background(.regularMaterial)
                 .cornerRadius(10)
                 .shadow(color: Color.black.opacity(0.3), radius: 20, x:0, y:15)
                 .padding()
+                .onChange(of: pds.selectedPOI, perform: { _ in
+                    toggleListPOI()
+                })
             }
         }
     }
@@ -220,10 +226,12 @@ extension ContentView {
         }
     }
 
-    func toggleStateView(){
-            viewState = (viewState == .showPOI) ? .listed : .showPOI
-     }
-    
+    func checkShowingCurrentCity(){
+        withAnimation (.easeInOut){
+            isShowingCurrentCity = (cds.currentCity != nil)
+        }
+    }
+     
     func changeStateToListing(){
         withAnimation {
             viewState = .listing
@@ -237,15 +245,14 @@ extension ContentView {
     }
 
     func changeStateToListed(){
-        withAnimation {
+        withAnimation{
             viewState = .listed
         }
     }
 
     func changeStateToShowPOI(){
-        withAnimation {
+        withAnimation(.easeInOut) {
             viewState = .showPOI
-            isShowingPOIList = false
         }
     }
 

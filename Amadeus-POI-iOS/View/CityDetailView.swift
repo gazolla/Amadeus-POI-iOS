@@ -30,7 +30,7 @@ struct CityDetailView: View {
                 }
             }
             .padding()
-            .onChange(of: isCitySelected, perform: { newValue in
+            .onChange(of: isCitySelected, perform: { _ in
                 cds.addCity()
             })
             .onDisappear{
