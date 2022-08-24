@@ -4,7 +4,7 @@ iOS app using Amadeus Points of Interest API to fetch the list of attractions ne
 
 <p align="center">
   <img alt="main Branch" src="https://raw.githubusercontent.com/gazolla/Amadeus-POI-iOS/master/AmadeusPOIiOS.gif" width="35%">
-&nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
   <img alt="MapBased Branch" src="https://raw.githubusercontent.com/gazolla/Amadeus-POI-iOS/master/AmadeusPOI.gif" width="35%">
 </p>
 <p align="center">
