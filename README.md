@@ -7,6 +7,11 @@ iOS app using Amadeus Points of Interest API to fetch the list of attractions ne
 &nbsp; &nbsp; &nbsp; &nbsp;
   <img alt="MapBased Branch" src="https://raw.githubusercontent.com/gazolla/Amadeus-POI-iOS/master/AmadeusPOI.gif" width="35%">
 </p>
+<p align="center">
+  main Branch
+&nbsp; &nbsp; &nbsp; &nbsp;
+  MapBased Branch
+</p>
 
 ### Supported Platforms
 
