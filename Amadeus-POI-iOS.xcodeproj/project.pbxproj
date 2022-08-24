@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C3F1205C28B657C000BBBE8A /* AmadeusPOI.gif in Resources */ = {isa = PBXBuildFile; fileRef = C3F1205B28B657C000BBBE8A /* AmadeusPOI.gif */; };
 		C3FC5BBA28AD4E7A00239499 /* Amadeus_POI_iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FC5BB928AD4E7A00239499 /* Amadeus_POI_iOSApp.swift */; };
 		C3FC5BBC28AD4E7A00239499 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FC5BBB28AD4E7A00239499 /* ContentView.swift */; };
 		C3FC5BBE28AD4E7F00239499 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3FC5BBD28AD4E7F00239499 /* Assets.xcassets */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C3F1205B28B657C000BBBE8A /* AmadeusPOI.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = AmadeusPOI.gif; sourceTree = "<group>"; };
 		C3FC5BB628AD4E7A00239499 /* Amadeus-POI-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Amadeus-POI-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3FC5BB928AD4E7A00239499 /* Amadeus_POI_iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Amadeus_POI_iOSApp.swift; sourceTree = "<group>"; };
 		C3FC5BBB28AD4E7A00239499 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				C3FC5BE428AE932200239499 /* README.md */,
+				C3F1205B28B657C000BBBE8A /* AmadeusPOI.gif */,
 				C3FC5BE228AE928E00239499 /* AmadeusPOIiOS.gif */,
 				C3FC5BB828AD4E7A00239499 /* Amadeus-POI-iOS */,
 				C3FC5BB728AD4E7A00239499 /* Products */,
@@ -192,6 +195,7 @@
 			files = (
 				C3FC5BC128AD4E7F00239499 /* Preview Assets.xcassets in Resources */,
 				C3FC5BE328AE928E00239499 /* AmadeusPOIiOS.gif in Resources */,
+				C3F1205C28B657C000BBBE8A /* AmadeusPOI.gif in Resources */,
 				C3FC5BBE28AD4E7F00239499 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
