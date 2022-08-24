@@ -9,7 +9,7 @@ iOS app using Amadeus Points of Interest API to fetch the list of attractions ne
 </p>
 <p align="center">
   main Branch
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
   MapBased Branch
 </p>
 
