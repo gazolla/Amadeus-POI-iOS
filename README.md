@@ -3,12 +3,10 @@
 iOS app using Amadeus Points of Interest API to fetch the list of attractions near cities(using MapKit's CLGeocoder()) and displays them on a list.
 
 <p align="center">
-  <img alt="main Branch" src="https://raw.githubusercontent.com/gazolla/Amadeus-POI-iOS/master/AmadeusPOIiOS.gif" width="45%">
+  <img alt="main Branch" src="https://raw.githubusercontent.com/gazolla/Amadeus-POI-iOS/master/AmadeusPOIiOS.gif" width="35%">
 &nbsp; &nbsp; &nbsp; &nbsp;
-  <img alt="MapBased Branch" src="https://raw.githubusercontent.com/gazolla/Amadeus-POI-iOS/master/AmadeusPOI.gif" width="45%">
+  <img alt="MapBased Branch" src="https://raw.githubusercontent.com/gazolla/Amadeus-POI-iOS/master/AmadeusPOI.gif" width="35%">
 </p>
-
-<img src="https://raw.githubusercontent.com/gazolla/Amadeus-POI-iOS/master/AmadeusPOIiOS.gif" width="220">
 
 ### Supported Platforms
 
